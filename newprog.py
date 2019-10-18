@@ -134,10 +134,3 @@ plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
 plt.show()
-
-
-Values = open('coordinates.csv', 'w')
-Values.write('x_jw,y_jw,x_moon,y_moon,x_earth,y_earth\n')
-for i in range(len(X_JW)):
-    Values.write(f'{X_JW[i]},{Y_JW[i]},{X_Moon[i]},{Y_Moon[i]},{X_Earth[i]},{Y_Earth[i]}\n')
-Values.close()
