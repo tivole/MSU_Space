@@ -8,8 +8,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import copy
 
+ds = pd.read_csv('DATA.csv')
+vx = ds.iloc[:, 0].values
+vy = ds.iloc[:, 1].values
+rad = ds.iloc[:, 2].values
+
+def polar(x, y):
+    r = np.sqrt(x**2 + y**2)
+    phi = 0
+    if y >= 0 and r != 0:
+        phi = np.arccos(x/r)
+    elif y < 0:
+        phi = (-1)*np.arccos(x/r)
+    else:
+        phi = 0
+    return (r, phi)
+
+delta_rad = [abs(rad[i] - rad[i+1]) for i in range(0, len(rad)-1)]
+delta = sum(delta_rad) / len(delta_rad)
+
 # Constants
 G = 8.644e-10
+L2_Distance = 1.5e6
+eps = 1e5
+# delta = 0.0003
+flag = True
 
 # Mass of objects
 Mass_Of_Sun = 1.98892e27
@@ -26,8 +49,8 @@ vy_earth_0 = 105372.0
 # James Webb
 x_JW_0 = 152111638.0
 y_JW_0 = 0.0
-vx_JW_0 = 3600
-vy_JW_0 = 25200.0 + vy_earth_0
+vx_JW_0 = 6200 * 3.6
+vy_JW_0 = 40320 + vy_earth_0
 
 # Moon
 x_moon_0 = 152503934.0
@@ -37,8 +60,8 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-T = 365 * 24.0
-M = 5000
+T = 2 * 365 * 24.0
+M = 10000
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -100,15 +123,24 @@ for m in range(M):
 
         omega.append(function([p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10], p[11]]))
 
-    u.append(np.copy(u[m]) + tau * np.copy(summa_2(omega)))
-
-
-
-
-
+    new_u = np.copy(u[m]) + tau * np.copy(summa_2(omega))
+    
+    
+    if m > 22:
+          
+        angle = polar(new_u[0], new_u[1])[1]
+        for i in range(len(rad)):
+            if rad[i] < angle + delta and rad[i] > angle - delta:
+                new_u[2] = vx[i]
+                new_u[3] = vy[i]
+                break
+    
+    u.append(new_u)
 
 X_JW = []
 Y_JW = []
+VX_JW = []
+VY_JW = []
 X_Earth = []
 Y_Earth = []
 X_Moon = []
@@ -119,13 +151,25 @@ Y_Moon = []
 for i in range(len(u)):
     X_JW.append(u[i][0])
     Y_JW.append(u[i][1])
+    VX_JW.append(u[i][2])
+    VY_JW.append(u[i][3])
     X_Earth.append(u[i][8])
     Y_Earth.append(u[i][9])
     X_Moon.append(u[i][4])
     Y_Moon.append(u[i][5])
 
 
+# Finding difference
+distance = []
+for i in range(len(X_Earth)):
+    distance.append(np.sqrt((X_Earth[i] - X_JW[i])**2 + (Y_Earth[i] - Y_JW[i])**2))
+    if(flag and distance[i] < L2_Distance + eps and distance[i] > L2_Distance - eps):
+        that_moment = i
+        flag = False
+
+
 # Visualising
+#plt.scatter([i for i in range(len(X_Earth))], distance, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_JW, Y_JW, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_Moon, Y_Moon, color = 'blue', label = 'Moon', s = 1)
 plt.scatter(X_Earth, Y_Earth, color = 'green', label = 'Earth', s = 1)

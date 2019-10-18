@@ -8,6 +8,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import copy
 
+def polar(x, y):
+    r = np.sqrt(x**2 + y**2)
+    if y >= 0 and r != 0:
+        phi = np.arccos(x/r)
+    elif y < 0:
+        phi = (-1)*np.arccos(x/r)
+    else:
+        phi = 0
+
+    return (r, phi)
+
 # Constants
 G = 8.644e-10
 
@@ -33,12 +44,12 @@ vy_earth_0 = 105372.0
 x_JW_0 = 153598238.0
 y_JW_0 = 0.0
 vx_JW_0 = 0
-vy_JW_0 = 1160.4153 + vy_earth_0
+vy_JW_0 = 1160.4152844 + vy_earth_0 # 1160.4153 + vy_earth_0
 
 # Addition constants
 t_0 = 0
 T = 365 * 24
-M = 5000
+M = 40000
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -130,7 +141,7 @@ plt.show()
 # Printing values
 
 Velocity_Values = open('DATA.csv', 'w')
-Velocity_Values.write('vx_JW,vy_JW\n')
+Velocity_Values.write('vx_JW,vy_JW,rad\n')
 for i in range(len(VX_JW)):
-    Velocity_Values.write(f'{VX_JW[i]},{VY_JW[i]}\n')
+    Velocity_Values.write(f'{VX_JW[i]},{VY_JW[i]},{(polar(X_JW[i], Y_JW[i])[1])}\n')
 Velocity_Values.close()

@@ -26,8 +26,8 @@ vy_earth_0 = 105372.0
 # James Webb
 x_JW_0 = 152111638.0
 y_JW_0 = 0.0
-vx_JW_0 = 3600
-vy_JW_0 = 25200.0 + vy_earth_0
+vx_JW_0 = 4200 * 3.6
+vy_JW_0 = 40320 + vy_earth_0
 
 # Moon
 x_moon_0 = 152503934.0
