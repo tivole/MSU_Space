@@ -21,6 +21,7 @@ def polar(x, y):
 
 # Constants
 G = 8.644e-10
+L2_Distance = 1.5e6
 
 # Mass of objects
 Mass_Of_Sun = 1.98892e27
@@ -49,7 +50,7 @@ vy_JW_0 = 1160.4152844 + vy_earth_0 # 1160.4153 + vy_earth_0
 # Addition constants
 t_0 = 0
 T = 365 * 24
-M = 40000
+M = 3000
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -127,9 +128,51 @@ for i in range(len(u)):
     Y_Earth.append(u[i][5])
 
 
+
+
+
+L2_X = 0
+L2_Y = 0
+
+L2_X_list = []
+L2_Y_list = []
+
+def L2(x, y):
+    if x < 0:
+        tmp_x = - np.sqrt(L2_Distance**2 / (1 + (y/x) ** 2))    
+    else:
+        tmp_x = np.sqrt(L2_Distance**2 / (1 + (y/x) ** 2))
+    tmp_y = tmp_x * (y/x)
+    
+    L2_X = tmp_x + x
+    L2_Y = tmp_y + y
+
+    return (L2_X, L2_Y)
+
+for i in range(len(X_Earth)):
+    if X_Earth[i] < 0:
+        tmp_x = - np.sqrt(L2_Distance**2 / (1 + (Y_Earth[i]/X_Earth[i]) ** 2))    
+    else:
+        tmp_x = np.sqrt(L2_Distance**2 / (1 + (Y_Earth[i]/X_Earth[i]) ** 2))
+    tmp_y = tmp_x * (Y_Earth[i]/X_Earth[i])
+    
+    L2_X = tmp_x + X_Earth[i]
+    L2_Y = tmp_y + Y_Earth[i]
+
+    L2_X_list.append(L2_X)
+    L2_Y_list.append(L2_Y)
+
+
+
+
+
+
 # Visualising
 plt.scatter(X_JW, Y_JW, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_Earth, Y_Earth, color = 'green', label = 'Earth', s = 1)
+
+plt.scatter(L2_X_list, L2_Y_list, color = 'yellow', label = 'L2', s = 1)
+
 plt.title('Space Apps Azerbaijan 2019 - MSU_Space')
 plt.xlabel('X')
 plt.ylabel('Y')
