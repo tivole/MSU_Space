@@ -143,14 +143,9 @@ for m in range(M):
     new_u = np.copy(u[m]) + tau * np.copy(summa_2(omega))
     
     
-    if m > 170:
-          
-        angle = polar(new_u[0], new_u[1])[1]
-        for i in range(len(phi)):
-            if phi[i] < angle + delta_phi and phi[i] > angle - delta_phi:
-                new_u[0] = l2x[i]
-                new_u[1] = l2y[i]
-                break
+    if m > 170:  
+        new_u[0] = l2x[m % int(M / qod)]
+        new_u[1] = l2y[m % int(M / qod)]
     
     u.append(new_u)
 
