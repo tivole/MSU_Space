@@ -67,8 +67,8 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-T = int(365 * 24.0)
-M = int(5000)
+T = int(2 * 365 * 24.0)
+M = int(2 * 5000)
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -132,7 +132,7 @@ for m in range(M):
 
     new_u = np.copy(u[m]) + tau * np.copy(summa_2(omega))
     
-    """
+    
     if m > 170:
           
         angle = polar(new_u[0], new_u[1])[1]
@@ -141,7 +141,7 @@ for m in range(M):
                 new_u[2] = vx[i]
                 new_u[3] = vy[i]
                 break
-    """
+    
     u.append(new_u)
 
 X_JW = []
