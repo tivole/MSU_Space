@@ -144,8 +144,8 @@ for m in range(M):
     
     
     if m > 170:  
-        new_u[0] = l2x[m % int(M / qod)]
-        new_u[1] = l2y[m % int(M / qod)]
+        new_u[0] = l2x[m]
+        new_u[1] = l2y[m]
     
     u.append(new_u)
 
