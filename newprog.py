@@ -30,7 +30,7 @@ delta = sum(delta_rad) / len(delta_rad)
 # Constants
 G = 8.644e-10
 L2_Distance = 1.5e6
-eps = 1e5
+eps = 87500
 # delta = 0.0003
 flag = True
 
@@ -47,10 +47,17 @@ vx_earth_0 = 0.0
 vy_earth_0 = 105372.0
 
 # James Webb
-x_JW_0 = 152111638.0
+x_JW_0 = 152104938.0 # 152111638.0
 y_JW_0 = 0.0
-vx_JW_0 = 6200 * 3.6
-vy_JW_0 = 40320 + vy_earth_0
+
+kk =237.137# 231
+vx_JW_0 = kk + 48787 # 48750.0
+vy_JW_0 = 7447 - kk  + vy_earth_0
+"""
+koef = 2.295593123559761
+vx_JW_0 = 48787 + 245
+vy_JW_0 = vx_JW_0 * koef
+"""
 
 # Moon
 x_moon_0 = 152503934.0
@@ -60,8 +67,8 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-T = 2 * 365 * 24.0
-M = 10000
+T = int(365 * 24.0)
+M = int(5000)
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -125,8 +132,8 @@ for m in range(M):
 
     new_u = np.copy(u[m]) + tau * np.copy(summa_2(omega))
     
-    
-    if m > 22:
+    """
+    if m > 170:
           
         angle = polar(new_u[0], new_u[1])[1]
         for i in range(len(rad)):
@@ -134,7 +141,7 @@ for m in range(M):
                 new_u[2] = vx[i]
                 new_u[3] = vy[i]
                 break
-    
+    """
     u.append(new_u)
 
 X_JW = []
@@ -160,12 +167,67 @@ for i in range(len(u)):
 
 
 # Finding difference
-distance = []
+
+
+L2_X = 0
+L2_Y = 0
+
+L2_X_list = []
+L2_Y_list = []
+
+def L2(x, y):
+    if x < 0:
+        tmp_x = - np.sqrt(L2_Distance**2 / (1 + (y/x) ** 2))    
+    else:
+        tmp_x = np.sqrt(L2_Distance**2 / (1 + (y/x) ** 2))
+    tmp_y = tmp_x * (y/x)
+    
+    L2_X = tmp_x + x
+    L2_Y = tmp_y + y
+
+    return (L2_X, L2_Y)
+
 for i in range(len(X_Earth)):
-    distance.append(np.sqrt((X_Earth[i] - X_JW[i])**2 + (Y_Earth[i] - Y_JW[i])**2))
-    if(flag and distance[i] < L2_Distance + eps and distance[i] > L2_Distance - eps):
+    if X_Earth[i] < 0:
+        tmp_x = - np.sqrt(L2_Distance**2 / (1 + (Y_Earth[i]/X_Earth[i]) ** 2))    
+    else:
+        tmp_x = np.sqrt(L2_Distance**2 / (1 + (Y_Earth[i]/X_Earth[i]) ** 2))
+    tmp_y = tmp_x * (Y_Earth[i]/X_Earth[i])
+    
+    L2_X = tmp_x + X_Earth[i]
+    L2_Y = tmp_y + Y_Earth[i]
+
+    L2_X_list.append(L2_X)
+    L2_Y_list.append(L2_Y)
+    
+    l2_x, l2_y = L2(X_Earth[i], Y_Earth[i])
+    
+    distance = np.sqrt((X_Earth[i] - X_JW[i])**2 + (Y_Earth[i] - Y_JW[i])**2)
+    # if(flag and distance < L2_Distance + eps and distance > L2_Distance - eps):
+    if (X_JW[i] < l2_x + eps and X_JW[i] > l2_x - eps) and (Y_JW[i] < l2_y + eps and Y_JW[i] > l2_y - eps):
         that_moment = i
+
+        print('rabotayet', )
         flag = False
+    
+
+def Our_Find(X, Y, elx, ely):
+    flag = False
+    for i in range(len(X)):
+        if X[i] < elx + eps and X[i] > elx - eps:
+            if Y[i] < ely + eps and Y[i] > ely - eps:
+                print("L2",i)
+                flag = True
+                break   
+    return flag
+
+
+for i in range(len(L2_X_list)):
+    if Our_Find(L2_X_list, L2_Y_list, X_JW[i], Y_JW[i]):
+        print('first', i)
+        break
+
+
 
 
 # Visualising
@@ -173,6 +235,11 @@ for i in range(len(X_Earth)):
 plt.scatter(X_JW, Y_JW, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_Moon, Y_Moon, color = 'blue', label = 'Moon', s = 1)
 plt.scatter(X_Earth, Y_Earth, color = 'green', label = 'Earth', s = 1)
+
+plt.scatter(L2_X_list, L2_Y_list, color = 'yellow', label = 'L2', s = 1)
+
+plt.scatter(X_JW[i], Y_JW[i], color = 'aqua', label = 'Tocka', s = 15)
+
 plt.title('Space Apps Azerbaijan 2019 - MSU_Space')
 plt.xlabel('X')
 plt.ylabel('Y')
