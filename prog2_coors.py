@@ -5,7 +5,7 @@
 # Importing libraries
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import copy
 
 ds = pd.read_csv('DATA.csv')
@@ -234,7 +234,7 @@ for i in range(len(L2_X_list)):
 
 
 
-
+"""
 # Visualising
 #plt.scatter([i for i in range(len(X_Earth))], distance, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_JW, Y_JW, color = 'red', label = 'JW', s = 1)
@@ -250,3 +250,4 @@ plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
 plt.show()
+"""

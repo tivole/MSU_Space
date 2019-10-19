@@ -1,6 +1,7 @@
-const width= 600;
+
+const width= 700;
 let followX= 1000000;
-let followY= 1000000;
+let followY= 500000;
 let time = 1;
 const coordinates = window.coordinates;
 let timeSpeed = 1;
@@ -12,7 +13,10 @@ let sun;
 let earth;
 let JWST1;
 let JWST2;
-
+let Days;
+let speed;
+let freeze = 3;
+let freezeindex = 0;
 
 
 var s = 1;  
@@ -20,7 +24,7 @@ function ZoomUp(){
     timeSpeed ++;
 }
 function ZoomDown(){
-    timeSpeed --;
+    freeze ++;
 }
 
 function Stop(){
@@ -40,7 +44,17 @@ function preload() {
     JWST1 = document.getElementById('jwst1');
     JWST1.style.position = "absolute";
     JWST2 = document.getElementById('jwst2');
-    JWST2.style.position = "absolute";;
+    JWST2.style.position = "absolute";
+
+    
+    Days = document.getElementById('days');
+    Days.style.position = "absolute";
+    Days.style.left = width*2 + 30;
+    Days.style.top = 30;
+    speed = document.getElementById('speed');
+    speed.style.position = "absolute";
+    speed.style.left = width*2 + 30;
+    speed.style.top = 60;
 }
 
 
@@ -63,6 +77,9 @@ function setup() {
     buttonStop.style("width", "50px");
     buttonStop.mousePressed(Stop);
     starsArray = stars();
+
+
+    
 }
 
 
@@ -82,7 +99,7 @@ function stars(){
 
 
 function draw() {
-    
+    if(freezeindex >= freeze){
     let l2 = L2({x:coordinates[time].x_earth,y:coordinates[time].y_earth});
     background(0);
     sun.style.top = width / 2;
@@ -98,8 +115,7 @@ function draw() {
         noStroke();
 
     }
-    followX = Max({x:coordinates[time].x_jw,y:coordinates[time].y_jw},{x:coordinates[time].x_earth,y:coordinates[time].y_earth},{x:coordinates[time].x_moon,y:coordinates[time].y_moon},
-        {x:coordinates[time+1].x_jw,y:coordinates[time+1].y_jw},{x:coordinates[time+1].x_earth,y:coordinates[time+1].y_earth},{x:coordinates[time+1].x_moon,y:coordinates[time+1].y_moon})/width;
+    followX = Max({x:coordinates[time].x_jw,y:coordinates[time].y_jw},{x:coordinates[time].x_earth,y:coordinates[time].y_earth},{x:coordinates[time].x_moon,y:coordinates[time].y_moon})/width;
     for(let i=0 ;i < time - 1; i++){
             stroke(0, 0, 150); 
             line(Relative(coordinates[i].x_jw - coordinates[i].x_earth) ,Relative(coordinates[i].y_jw - coordinates[i].y_earth),Relative(coordinates[i+1].x_jw - coordinates[i+1].x_earth),Relative(coordinates[i+1].y_jw - coordinates[i+1].y_earth));
@@ -107,37 +123,61 @@ function draw() {
             // stroke(150, 0, 0); 
             //  line(Relative(coordinates[i].x_moon - coordinates[i].x_earth),Relative(coordinates[i].y_moon - coordinates[i].y_earth),Relative(coordinates[i+1].x_moon - coordinates[i+1].x_earth),Relative(coordinates[i+1].y_moon - coordinates[i+1].y_earth));
             // noStroke();
-            JWST1.style.left =Relative(coordinates[i].x_jw - coordinates[i].x_earth) ;
-            JWST1.style.top =Relative(coordinates[i].y_jw - coordinates[i].y_earth) ;
-            moon.style.left=Relative(coordinates[i].x_moon - coordinates[i].x_earth);
-            moon.style.top=Relative(coordinates[i].y_moon - coordinates[i].y_earth);
+    }
+    JWST1.style.left =Relative(coordinates[time-1].x_jw - coordinates[time-1].x_earth) ;
+    JWST1.style.top =Relative(coordinates[time-1].y_jw - coordinates[time-1].y_earth) ;
+    moon.style.left=Relative(coordinates[time-1].x_moon - coordinates[time-1].x_earth);
+    moon.style.top=Relative(coordinates[time-1].y_moon - coordinates[time-1].y_earth);
+
+    if(time-2 > 0)
+        speed.innerText = parseInt( Math.sqrt((coordinates[time-1].x_jw - coordinates[time-2].x_jw)*(coordinates[time-1].x_jw - coordinates[time-2].x_jw)  + 
+        (coordinates[time-1].y_jw - coordinates[time-2].y_jw)*(coordinates[time-1].y_jw - coordinates[time-2].y_jw) )/(365 *24 /5000) ) + " km/h"
+    if( Relative(l2.x - coordinates[time].x_earth) < width){
+        fill(255);
+        ellipse(Relative(l2.x - coordinates[time].x_earth),Relative(l2.y - coordinates[time].y_earth),4,4);
+        text("L2",Relative(l2.x - coordinates[time].x_earth) + 10,Relative(l2.y - coordinates[time].y_earth) + 10);
+        noStroke();
     }
 
-    ellipse(Relative(l2.x - coordinates[time].x_earth),Relative(l2.y - coordinates[time].y_earth),4,4)
-    //l2.x / 1000000 + 3/2*width, l2.y / 1000000 + width/2,8,8);
+
+    
+    //l2.x / followY + 3/2*width, l2.y / followY + width/2,8,8);
   
     for(let i=0 ;i < time - 1; i++){
         stroke(0, 0, 150); 
-        line(coordinates[i].x_jw / 1000000 + 3/2*width,coordinates[i].y_jw/ 1000000 + width /2 ,
-            coordinates[i+1].x_jw/ 1000000 + 3/2*width ,coordinates[i+1].y_jw/ 1000000 + width /2);
+        line(coordinates[i].x_jw / followY + 3/2*width,coordinates[i].y_jw/ followY + width /2 ,
+            coordinates[i+1].x_jw/ followY + 3/2*width ,coordinates[i+1].y_jw/ followY + width /2);
         noStroke();
-        
-        JWST2.style.left =coordinates[i].x_jw / 1000000 + 3/2*width ;
-        JWST2.style.top =coordinates[i].y_jw/ 1000000 + width /2 ;
+       
         // stroke(150, 0, 0); 
-        // line(coordinates[i].x_moon / 1000000 + 3/2*width,coordinates[i].y_moon / 1000000 + width /2,
-        //     coordinates[i+1].x_moon / 1000000 + 3/2*width,coordinates[i+1].y_moon / 1000000+ width /2);
+        // line(coordinates[i].x_moon / followY + 3/2*width,coordinates[i].y_moon / followY + width /2,
+        //     coordinates[i+1].x_moon / followY + 3/2*width,coordinates[i+1].y_moon / followY+ width /2);
         // noStroke();
         stroke(0, 150, 0);
-        line(coordinates[i].x_earth / 1000000 + 3/2*width,coordinates[i].y_earth / 1000000 + width /2,
-            coordinates[i+1].x_earth / 1000000 + 3/2*width,coordinates[i+1].y_earth / 1000000 + width /2);
+        line(coordinates[i].x_earth / followY + 3/2*width,coordinates[i].y_earth / followY + width /2,
+            coordinates[i+1].x_earth / followY + 3/2*width,coordinates[i+1].y_earth / followY + width /2);
         noStroke();
-    }
+    } 
+    JWST2.style.left =coordinates[time-1].x_jw / followY + 3/2*width ;
+    JWST2.style.top =coordinates[time-1].y_jw/ followY + width /2 ;
     stroke(255, 0 , 0);
-    ellipse(l2.x  / 1000000 + 3/2*width,l2.y / 1000000 + width /2  ,1,1)
+    ellipse(l2.x  / followY + 3/2*width,l2.y / followY + width /2  ,1,1)
     noStroke();
+    fill(255);
+    text("Earth",width/2+10, width/2-10);
+    text("JWST",Relative(coordinates[time-1].x_jw - coordinates[time-1].x_earth)+10, Relative(coordinates[time-1].y_jw - coordinates[time-1].y_earth)-10);
+    text("JWST",coordinates[time-1].x_earth / followY + 3/2*width + 10,coordinates[time-1].y_earth / followY + width /2 + 10);
+    text("Moon",Relative(coordinates[time-1].x_moon - coordinates[time-1].x_earth)+10, Relative(coordinates[time-1].y_moon - coordinates[time-1].y_earth)+10);
+    text("Sun",width*3/2+12, width/2-12);
+    noStroke();
+    Days.innerText= parseInt(time *365/5000) + " days";
     if(followX > 20000) moon.style.visibility = "hidden"; 
+    
     time +=timeSpeed;
+    freezeindex=0;
+    }
+    else
+        freezeindex++;
     if(time > coordinates.length -1) time= coordinates.length;
 
 }
@@ -147,8 +187,8 @@ function draw() {
 function Max(J,E,M){
     let x = [Math.abs(J.x-E.x),Math.abs(M.x-E.x),Math.abs(J.x-M.x) ];
     let y = [Math.abs(J.y-E.y),Math.abs(M.y-E.y),Math.abs(J.y-M.y)];
-    return Math.max.apply(null, [Math.max.apply(null, y),Math.max.apply(null, x)]) * 3 ;
-    //return  4800000;
+    //return Math.max.apply(null, [Math.max.apply(null, y),Math.max.apply(null, x)]) * 3 ;
+    return  4000000;
 }
 
 function Relative(coordinate){
