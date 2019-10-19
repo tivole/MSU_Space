@@ -8,7 +8,7 @@ app.config['IMG_FOLDER'] = IMG
 
 @app.route("/")
 def start():
-    print( request.args.get("param"))
+    print( request.args.get("paramgit"))
     x = 2
     return str(x)
 
