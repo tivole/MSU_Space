@@ -186,5 +186,5 @@ plt.show()
 Velocity_Values = open('DATA.csv', 'w')
 Velocity_Values.write('vx_JW,vy_JW,rad\n')
 for i in range(len(VX_JW)):
-    Velocity_Values.write(f'{VX_JW[i]},{VY_JW[i]},{(polar(X_JW[i], Y_JW[i])[1])}\n')
+    Velocity_Values.write(f'{X_JW[i]},{Y_JW[i]},{(polar(X_JW[i], Y_JW[i])[1])}\n')
 Velocity_Values.close()

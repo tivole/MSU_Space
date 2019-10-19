@@ -29,8 +29,12 @@ def polar(x, y):
         phi = 0
     return (r, phi)
 
-delta_rad = [abs(rad[i] - rad[i+1]) for i in range(0, len(rad)-1)]
-delta = sum(delta_rad) / len(delta_rad)
+tmp_delta_rad = [abs(rad[i] - rad[i+1]) for i in range(0, len(rad)-1)]
+delta_rad = sum(tmp_delta_rad) / len(tmp_delta_rad)
+
+
+tmp_delta_phi = [abs(phi[i] - phi[i+1]) for i in range(0, len(phi)-1)]
+delta_phi = sum(tmp_delta_phi) / len(tmp_delta_phi)
 
 # Constants
 G = 8.644e-10
@@ -142,8 +146,8 @@ for m in range(M):
     if m > 170:
           
         angle = polar(new_u[0], new_u[1])[1]
-        for i in range(len(rad)):
-            if phi[i] < angle + delta and phi[i] > angle - delta:
+        for i in range(len(phi)):
+            if phi[i] < angle + delta_phi and phi[i] > angle - delta_phi:
                 new_u[0] = l2x[i]
                 new_u[1] = l2y[i]
                 break
