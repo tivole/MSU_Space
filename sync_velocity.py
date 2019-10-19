@@ -50,7 +50,7 @@ vy_JW_0 = 1160.4152844 + vy_earth_0 # 1160.4153 + vy_earth_0
 # Addition constants
 t_0 = 0
 T = 365 * 24
-M = 30000
+M = 5000
 tau = (T - t_0) / M
 t = t_0
 S = 4
