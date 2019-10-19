@@ -76,7 +76,7 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-qod = 2
+qod = 1
 T = int(qod * 365 * 24.0)
 M = int(qod * 5000)
 tau = (T - t_0) / M
