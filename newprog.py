@@ -30,7 +30,7 @@ delta = sum(delta_rad) / len(delta_rad)
 # Constants
 G = 8.644e-10
 L2_Distance = 1.5e6
-eps = 62500
+eps = 87500
 # delta = 0.0003
 flag = True
 
@@ -49,8 +49,15 @@ vy_earth_0 = 105372.0
 # James Webb
 x_JW_0 = 152104938.0 # 152111638.0
 y_JW_0 = 0.0
-vx_JW_0 = 73000.0
-vy_JW_0 = 4500  + vy_earth_0
+
+kk =237.137# 231
+vx_JW_0 = kk + 48787 # 48750.0
+vy_JW_0 = 7447 - kk  + vy_earth_0
+"""
+koef = 2.295593123559761
+vx_JW_0 = 48787 + 245
+vy_JW_0 = vx_JW_0 * koef
+"""
 
 # Moon
 x_moon_0 = 152503934.0
@@ -61,7 +68,7 @@ vy_moon_0 = 3472.56 + vy_earth_0
 # Addition constants
 t_0 = 0
 T = int(365 * 24.0)
-M = int(20000)
+M = int(5000)
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -218,13 +225,11 @@ def Our_Find(X, Y, elx, ely):
 for i in range(len(L2_X_list)):
     if Our_Find(L2_X_list, L2_Y_list, X_JW[i], Y_JW[i]):
         print('first', i)
-        ans = np.sqrt((L2_X_list[i] - X_JW[i])**2 + (L2_Y_list[i] - Y_JW[i])**2)
-        print(ans)
         break
 
 
 
-"""
+
 # Visualising
 #plt.scatter([i for i in range(len(X_Earth))], distance, color = 'red', label = 'JW', s = 1)
 plt.scatter(X_JW, Y_JW, color = 'red', label = 'JW', s = 1)
@@ -233,9 +238,10 @@ plt.scatter(X_Earth, Y_Earth, color = 'green', label = 'Earth', s = 1)
 
 plt.scatter(L2_X_list, L2_Y_list, color = 'yellow', label = 'L2', s = 1)
 
+plt.scatter(X_JW[i], Y_JW[i], color = 'aqua', label = 'Tocka', s = 15)
+
 plt.title('Space Apps Azerbaijan 2019 - MSU_Space')
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
 plt.show()
-"""
