@@ -14,9 +14,9 @@ vx = ds.iloc[:, 0].values
 vy = ds.iloc[:, 1].values
 rad = ds.iloc[:, 2].values
 
-l2x = ds.iloc[:, 0].values
-l2y = ds.iloc[:, 1].values
-phi = ds.iloc[:, 2].values
+l2x = ds2.iloc[:, 0].values
+l2y = ds2.iloc[:, 1].values
+phi = ds2.iloc[:, 2].values
 
 def polar(x, y):
     r = np.sqrt(x**2 + y**2)
@@ -76,7 +76,7 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-qod = 1
+qod = 2
 T = int(qod * 365 * 24.0)
 M = int(qod * 5000)
 tau = (T - t_0) / M
