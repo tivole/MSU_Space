@@ -1,10 +1,20 @@
-import http.server
-import socketserver
+from flask import Flask
+from flask import render_template
+import os
+app = Flask(__name__,template_folder='template')
+IMG = os.path.join("static",'img')
+app.config['IMG_FOLDER'] = IMG
 
-PORT = 8000
+@app.route("/")
+def start():
+    x = 2
+    return str(x)
 
-Handler = http.server.SimpleHTTPRequestHandler
 
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
-    httpd.serve_forever()
+@app.route("/<name>")
+def files(name):
+    pass
+
+
+if __name__ == "__main__":
+    app.run()
