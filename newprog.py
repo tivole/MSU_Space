@@ -133,7 +133,7 @@ for m in range(M):
     new_u = np.copy(u[m]) + tau * np.copy(summa_2(omega))
     
     """
-    if m > 17:
+    if m > 170:
           
         angle = polar(new_u[0], new_u[1])[1]
         for i in range(len(rad)):
