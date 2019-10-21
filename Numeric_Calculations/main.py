@@ -76,9 +76,9 @@ vy_moon_0 = 3472.56 + vy_earth_0
 
 # Addition constants
 t_0 = 0
-qod = 2
-T = int(qod * 365 * 24.0)
-M = int(qod * 5000)
+period = 2
+T = int(period * 365 * 24.0)
+M = int(period * 5000)
 tau = (T - t_0) / M
 t = t_0
 S = 4
@@ -109,9 +109,6 @@ dot_vy_earth = lambda U: ((-1)*G*(Mass_Of_Sun*U[9]) / ((U[8]**2 + U[9]**2)**(3/2
 
 # Function for system of differential equations
 function = lambda U: np.array([dot_x_JW(U), dot_y_JW(U), dot_vx_JW(U), dot_vy_JW(U), dot_x_moon(U), dot_y_moon(U), dot_vx_moon(U), dot_vy_moon(U), dot_x_earth(U), dot_y_earth(U), dot_vx_earth(U), dot_vy_earth(U)])
-# function = (dot_x_JW, dot_y_JW, dot_vx_JW, dot_vy_JW, dot_x_moon, dot_y_moon, dot_vx_moon, dot_vy_moon, dot_x_earth, dot_y_earth, dot_vx_earth, dot_vy_earth)
-
-
 
 def summa(k, omega):
     if k == 1:
