@@ -5,8 +5,7 @@ NASA Sapace Apps Azerbaijan 2019 <b>MSU_Space</b> team.
 
 # Introduction
 
-We are <i>“MSU_Space”</i>. Our challenge is called [“UP, OUT AND AWAY”](https://spaceapps.space.az/challenges/stars/and-away). Our main aim is to create
-a simulation that will describe the motion of heaven bodies and James Webb’s trajectory to the point Lagrange2 in Solar System.
+We are <i>“MSU_Space”</i>. Our challenge is called [“UP, OUT AND AWAY”](https://spaceapps.space.az/challenges/stars/and-away). Our main aim is to create a simulation that will describe the motion of heavy bodies and James Webb’s trajectory to the point Lagrange2 in Solar System.
 
 The image below describes the motion of all bodies in our system:
 
