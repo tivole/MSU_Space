@@ -2,6 +2,16 @@
 
 NASA Sapace Apps Azerbaijan 2019 <b>MSU_Space</b> team.
 
+# Main idea
+
+<img src="img/lamp_idea.png" width="12%" height="%12">
+
+Create a game so that any users from all over the world can feel themselves in space and understand astronomy.
+
+Users will be able to follow the movement of all planets and the James Web Telescope to Lagrange 2 point on a 3D simulated model of the solar system.
+
+They will be able, for educational purposes, to play around with the characteristics of all the planets and launch a telescope from any planet of our system to any point in Lagrange; these experiments will interest everyone.
+
 
 # Introduction
 
@@ -137,3 +147,10 @@ for m in range(M):
 4. We want to develop our game/simulation and make it three dimensional.
 
 5. We will add encyclopedia for users! There will be descriptions of the planets, Sun and other objects in the Solar system and different facts about it.
+
+# Our team
+
+1. Kamran Asgarov - [LinkedIn](https://www.linkedin.com/in/tivole/)
+2. Farid Agashirinov 
+3. Magommed Gasanov
+4. Orkhan Alili
