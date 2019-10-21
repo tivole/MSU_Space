@@ -48,6 +48,20 @@ be able to stay there infinitely long time, the real model will not.
 
 (!) TODO: Add numerical solution code examples here (!)
 
+
 # Visualisations
 
 ![Visualisation](img/visualisation.gif)
+
+
+# Our future plans
+
+1. We want to give freedom for user’s imagination! We are going to add functions, that will allow users to change different parameters, such as mass, velocity and distances.
+
+2. We are going to add Venus, Jupiter, Saturn, Pluto, Mercury, Mars, Uranus and Neptune. And we want to make it more realistic.
+
+3. We are going to take into account relativistic effects and radiation of the Sun.
+
+4. We want to develop our game/simulation and make it three dimensional.
+
+5. We will add encyclopedia for users! There will be descriptions of the planets, Sun and other objects in the Solar system and different facts about it.
