@@ -2,6 +2,7 @@
 
 NASA Sapace Apps Azerbaijan 2019 <b>MSU_Space</b> team.
 
+
 # Introduction
 
 We are <i>“MSU_Space”</i>. Our challenge is called [“UP, OUT AND AWAY”](https://spaceapps.space.az/challenges/stars/and-away). Our main aim is to create
@@ -41,3 +42,12 @@ to the Moon, James Webb did the gravitational maneuver and as a result of this i
 velocity. To reach the desired orbit we have used the impulse maneuver. When James Webb reaches the
 point L2 it will synchronize its coordinates and velocities with point L2. Although automatically it will
 be able to stay there infinitely long time, the real model will not.
+
+
+# Numerical Solution
+
+(!) TODO: Add numerical solution code examples here (!)
+
+# Visualisations
+
+![Visualisation](img/visualisation.gif)
