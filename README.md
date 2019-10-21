@@ -151,6 +151,6 @@ for m in range(M):
 # Our team
 
 1. Kamran Asgarov - [LinkedIn](https://www.linkedin.com/in/tivole/)
-2. Farid Agashirinov 
-3. Magommed Gasanov
-4. Orkhan Alili
+2. Farid Agashirinov - [Instagram](https://www.instagram.com/farid_craddy/)
+3. Magommed Gasanov - [GitHub](https://github.com/vfvtll)
+4. Orkhan Alili - [Instagram](https://www.instagram.com/apollon_galaksias/)
