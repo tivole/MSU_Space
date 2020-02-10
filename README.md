@@ -1,6 +1,6 @@
 # MSU_Space
 
-NASA Sapace Apps Azerbaijan 2019 <b>MSU_Space</b> team.
+[NASA Space Apps Azerbaijan 2019](https://spaceapps.space.az/) <b>MSU_Space</b> team.
 
 # Main idea
 
